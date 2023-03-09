@@ -1,0 +1,264 @@
+<routes>
+    <flow id="flow_1" from="-h11" to="h14" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_2" from="-h21" to="E9" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_3" from="-v11" to="-v14" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="flow_4" from="-v21" to="E9" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_5" from="-h14" to="h11" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_6" from="-h14" to="E9" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_7" from="-h14" to="v21" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    <flow id="flow_8" from="-E9" to="h21" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_9" from="-E9" to="h34" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_10" from="-E9" to="v21" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+   
+  
+    
+    <flow id="flow_11" from="-v21" to="h14" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_13" from="-h11" to="v11" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    <flow id="flow_14" from="-h11" to="-v14" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    
+    
+    
+    <flow id="flow_15" from="-v21" to="h11" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    <flow id="flow_16" from="-v11" to="h11" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_17" from="-v11" to="h14" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_18" from="v14" to="E9" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_19" from="v14" to="h14" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_20" from="v14" to="v11" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    
+    
+    <flow id="flow_21" from="-v34" to="v21" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_22" from="-v34" to="h34" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_23" from="-v34" to="E9" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/> 
+
+     
+    <flow id="flow_24" from="-h21" to="v11" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_25" from="-h21" to="-v14" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_1" from="-h34" to="v31" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_2" from="-h34" to="v34" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_3" from="-h34" to="h31" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_4" from="-h24" to="v31" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_5" from="-h24" to="v34" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_6" from="-h24" to="h21" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_7" from="-h31" to="h34" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_8" from="-h31" to="v11" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_9" from="-h31" to="-v14" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_10" from="-v31" to="v34" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_11" from="-v31" to="h14" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_12" from="-v31" to="h11" begin="0" end="2500" vehsPerHour="25" departSpeed="max" departPos="base" departLane="best"/>
+    <!-- raddoppia la frequenza di auto in questa fase -->
+    <flow id="flow_26" from="-h11" to="h14" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_27" from="-h21" to="E9" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_28" from="-v11" to="-v14" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="flow_29" from="-v21" to="E9" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_30" from="-h14" to="h11" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_31" from="-h14" to="E9" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_32" from="-h14" to="v21" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    <flow id="flow_33" from="-E9" to="h21" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_34" from="-E9" to="h34" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_35" from="-E9" to="v21" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+   
+  
+    
+    <flow id="flow_36" from="-v21" to="h14" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_37" from="-h11" to="v11" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    <flow id="flow_38" from="-h11" to="-v14" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    
+    
+    
+    <flow id="flow_39" from="-v21" to="h11" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    <flow id="flow_40" from="-v11" to="h11" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_41" from="-v11" to="h14" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_42" from="v14" to="E9" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_43" from="v14" to="h14" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_44" from="v14" to="v11" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    
+    
+    <flow id="flow_45" from="-v34" to="v21" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_46" from="-v34" to="h34" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_47" from="-v34" to="E9" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/> 
+
+     
+    <flow id="flow_48" from="-h21" to="v11" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow49" from="-h21" to="-v14" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_13" from="-h34" to="v31" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_14" from="-h34" to="v34" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_15" from="-h34" to="h31" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_16" from="-h24" to="v31" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_17" from="-h24" to="v34" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_18" from="-h24" to="h21" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_19" from="-h31" to="h34" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_20" from="-h31" to="v11" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_21" from="-h31" to="-v14" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_22" from="-v31" to="v34" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_23" from="-v31" to="h14" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_24" from="-v31" to="h11" begin="2500" end="5000" vehsPerHour="50" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_50" from="-h11" to="h14" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_51" from="-h21" to="E9" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_52" from="-v11" to="-v14" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="flow_53" from="-v21" to="E9" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_54" from="-h14" to="h11" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_55" from="-h14" to="E9" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_56" from="-h14" to="v21" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    <flow id="flow_57" from="-E9" to="h21" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_58" from="-E9" to="h34" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_59" from="-E9" to="v21" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+   
+  
+    
+    <flow id="flow_60" from="-v21" to="h14" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_61" from="-h11" to="v11" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    <flow id="flow_62" from="-h11" to="-v14" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    
+    
+    
+    <flow id="flow_63" from="-v21" to="h11" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    <flow id="flow_64" from="-v11" to="h11" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_65" from="-v11" to="h14" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_66" from="v14" to="E9" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_67" from="v14" to="h14" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_68" from="v14" to="v11" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    
+    
+    <flow id="flow_69" from="-v34" to="v21" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_70" from="-v34" to="h34" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_71" from="-v34" to="E9" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/> 
+
+     
+    <flow id="flow_72" from="-h21" to="v11" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_73" from="-h21" to="-v14" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_25" from="-h34" to="v31" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_26" from="-h34" to="v34" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_27" from="-h34" to="h31" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_28" from="-h24" to="v31" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_29" from="-h24" to="v34" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_30" from="-h24" to="h21" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_31" from="-h31" to="h34" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_32" from="-h31" to="v11" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_33" from="-h31" to="-v14" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_34" from="-v31" to="v34" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_35" from="-v31" to="h14" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_36" from="-v31" to="h11" begin="5000" end="7500" vehsPerHour="75" departSpeed="max" departPos="base" departLane="best"/>
+<!--quarta fase-->
+     <flow id="flow_73.1" from="-h11" to="h14" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_74" from="-h21" to="E9" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_75" from="-v11" to="-v14" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="flow_76" from="-v21" to="E9" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_77" from="-h14" to="h11" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_78" from="-h14" to="E9" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_79" from="-h14" to="v21" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    <flow id="flow_80" from="-E9" to="h21" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_81" from="-E9" to="h34" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_82" from="-E9" to="v21" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+   
+  
+    
+    <flow id="flow_83" from="-v21" to="h14" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_84" from="-h11" to="v11" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    <flow id="flow_85" from="-h11" to="-v14" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    
+    
+    
+    <flow id="flow_86" from="-v21" to="h11" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    <flow id="flow_87" from="-v11" to="h11" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_88" from="-v11" to="h14" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_89" from="v14" to="E9" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_90" from="v14" to="h14" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_91" from="v14" to="v11" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    
+    
+    
+    <flow id="flow_92" from="-v34" to="v21" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="flow_93" from="-v34" to="h34" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_94" from="-v34" to="E9" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/> 
+
+     
+    <flow id="flow_95" from="-h21" to="v11" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    
+    <flow id="flow_96" from="-h21" to="-v14" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_37" from="-h34" to="v31" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_38" from="-h34" to="v34" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_39" from="-h34" to="h31" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_40" from="-h24" to="v31" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_41" from="-h24" to="v34" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_42" from="-h24" to="h21" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_43" from="-h31" to="h34" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_44" from="-h31" to="v11" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_45" from="-h31" to="-v14" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_46" from="-v31" to="v34" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/> 
+    <flow id="f_47" from="-v31" to="h14" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+    <flow id="f_48" from="-v31" to="h11" begin="7501" end="10000" vehsPerHour="100" departSpeed="max" departPos="base" departLane="best"/>
+</routes>
