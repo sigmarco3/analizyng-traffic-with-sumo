@@ -128,7 +128,8 @@ class SumoEnvironment(gym.Env):
         SumoEnvironment.CONNECTION_LABEL += 1
         self.sumo = None
         self.index = 0
-
+        self.loaded =0
+        self.arrived = 0
         if LIBSUMO:
             traci.start([sumolib.checkBinary('sumo'), '-n', self._net])  # Start only to retrieve traffic light information
             conn = traci
@@ -214,13 +215,14 @@ class SumoEnvironment(gym.Env):
 
     def reset(self, seed: Optional[int] = None, **kwargs):
         super().reset(seed=seed, **kwargs)
-        
+
         if self.run != 0:
             self.close()
             self.save_csv(self.out_csv_name, self.run)
         self.run += 1
         self.metrics = []
-
+        self.loaded = 0
+        self.arrived = 0
         if seed is not None:
             self.sumo_seed = seed
         self._start_simulation()
@@ -368,13 +370,28 @@ class SumoEnvironment(gym.Env):
         speeds = [self.sumo.vehicle.getSpeed(vehicle) for vehicle in vehicles]
         waiting_times = [self.sumo.vehicle.getWaitingTime(vehicle) for vehicle in vehicles]
         totals = self.sumo.vehicle.getIDCount()
+
+        l = traci.vehicle.getIDList()
+
+        # determino numero entrati e usciti analizzando le liste
+        set1 = set(oldList)
+        set2 = set(l)
+        temp1 = [x for x in set1 if x not in set2]  # elementi che non stanno più nella seconda lista ma prima c'erano vuol dire che sono usciti
+        temp2 = [x for x in set2 if x not in set1]  # elementi che non stanno nella prima lista ma nella seconda sono entrati
+        entrati = len(temp2)
+        usciti = len(temp1)
+        oldList = l
+        self.loaded += entrati
+        self.arrived += usciti
         return {
             # In SUMO, a vehicle is considered halting if its speed is below 0.1 m/s
             'system_total_stopped': sum(int(speed < 0.1) for speed in speeds),
             'system_total_waiting_time': sum(waiting_times),
             'system_mean_waiting_time': np.mean(waiting_times),
             'system_mean_speed': 0.0 if len(vehicles) == 0 else np.mean(speeds),
-            'total_vehicle': totals
+            'total_vehicle': totals,
+            'loaded' : self.loaded,
+            'arrived':self.arrived
         }
     
     def _get_per_agent_info(self):

@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
     prs = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   description="""Q-Learning 2x2""")
-    prs.add_argument("-route", dest="route", type=str, default='nets/2x2grid/2x2crescente.rou.xml', help="Route definition xml file.\n")
+    prs.add_argument("-route", dest="route", type=str, default='nets/2x2grid/2x2crescente2.rou.xml', help="Route definition xml file.\n")
     prs.add_argument("-a", dest="alpha", type=float, default=0.1, required=False, help="Alpha learning rate.\n")
     prs.add_argument("-g", dest="gamma", type=float, default=0.99, required=False, help="Gamma discount rate.\n")
     prs.add_argument("-e", dest="epsilon", type=float, default=0.05, required=False, help="Epsilon.\n")
@@ -34,11 +34,11 @@ if __name__ == '__main__':
     prs.add_argument("-gui", action="store_true", default=False, help="Run with visualization on SUMO.\n")
     prs.add_argument("-fixed", action="store_true", default=False, help="Run with fixed timing traffic signals.\n")
     prs.add_argument("-s", dest="seconds", type=int, default=10000, required=False, help="Number of simulation seconds.\n")
-    prs.add_argument("-r", dest="reward", type=str, default='pressure', required=False, help="Reward function: [-r queue] for average queue reward or [-r wait] for waiting time reward.\n")
+    prs.add_argument("-r", dest="reward", type=str, default='diff-waiting-time', required=False, help="Reward function: [-r queue] for average queue reward or [-r wait] for waiting time reward.\n")
     prs.add_argument("-runs", dest="runs", type=int, default=1, help="Number of runs.\n")
     args = prs.parse_args()
     experiment_time = str(datetime.now()).split('.')[0]
-    out_csv = 'outputs/2x2/result-alpha0.1-gamma0.99_test_crescente(pressure)lungo'
+    out_csv = 'outputs/2x2/result-alpha0.1-gamma0.99_test_crescente(wait)1M'
     output_file = 'output.csv'
     env = SumoEnvironment(net_file='nets/2x2grid/2x2.net.xml',
                           route_file=args.route,
@@ -65,12 +65,12 @@ if __name__ == '__main__':
 
         if args.fixed:
             while not done['__all__']:
-                _, _, done, _ = env.step({})
+                _, _, done = env.step({})
         else:
             while not done['__all__']:
                 actions = {ts: ql_agents[ts].act() for ts in ql_agents.keys()}
 
-                s, r, done, _ = env.step(action=actions)
+                s, r, done = env.step(action=actions)
                 #queste righe non dovrebbero servire più  , learning fatto
                 for agent_id in ql_agents.keys():
                      ql_agents[agent_id].learn(next_state=env.encode(s[agent_id], agent_id), reward=r[agent_id])

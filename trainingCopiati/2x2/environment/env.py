@@ -70,6 +70,7 @@ class SumoEnvironment(gym.Env):
         route_file: str,
         reward_fn: Union[str, Callable, dict],
         out_csv_name: Optional[str] = None,
+
         use_gui: bool = False, 
         virtual_display: Tuple[int,int] = (3200, 1800),
         begin_time: int = 0, 
@@ -80,8 +81,7 @@ class SumoEnvironment(gym.Env):
         delta_time: int = 5, 
         yellow_time: int = 2, 
         min_green: int = 5, 
-        max_green: int = 50,
-
+        max_green: int = 50, 
         single_agent: bool = False,
 
         add_system_info: bool = True,
@@ -100,7 +100,6 @@ class SumoEnvironment(gym.Env):
         self._net = net_file
         self._route = route_file
         self.use_gui = use_gui
-
         if self.use_gui or self.render_mode is not None:
             self._sumo_binary = sumolib.checkBinary('sumo-gui')
         else:
@@ -128,7 +127,9 @@ class SumoEnvironment(gym.Env):
         self.label = str(SumoEnvironment.CONNECTION_LABEL)
         SumoEnvironment.CONNECTION_LABEL += 1
         self.sumo = None
-        self.loaded = 0
+        self.index = 0
+        self.loaded =0
+        self.arrived = 0
         if LIBSUMO:
             traci.start([sumolib.checkBinary('sumo'), '-n', self._net])  # Start only to retrieve traffic light information
             conn = traci
@@ -140,7 +141,6 @@ class SumoEnvironment(gym.Env):
         if isinstance(self.reward_fn, dict):
             self.traffic_signals = dict()
             for key, reward_fn_value in self.reward_fn.items():
-
                 self.traffic_signals[key] = TrafficSignal(
                     self,
                     key,
@@ -202,7 +202,7 @@ class SumoEnvironment(gym.Env):
                 self.disp = SmartDisplay(size=self.virtual_display)
                 self.disp.start()
                 print("Virtual display started.")
-
+        print(sumo_cmd)
         if LIBSUMO:
             traci.start(sumo_cmd)
             self.sumo = traci
@@ -215,13 +215,15 @@ class SumoEnvironment(gym.Env):
 
     def reset(self, seed: Optional[int] = None, **kwargs):
         super().reset(seed=seed, **kwargs)
-        
+
         if self.run != 0:
             self.close()
             self.save_csv(self.out_csv_name, self.run)
         self.run += 1
         self.metrics = []
-
+        self.loaded = 0
+        self.arrived = 0
+        self.oldList = []
         if seed is not None:
             self.sumo_seed = seed
         self._start_simulation()
@@ -229,7 +231,6 @@ class SumoEnvironment(gym.Env):
         if isinstance(self.reward_fn, dict):
             self.traffic_signals = dict()
             for key, reward_fn_value in self.reward_fn.items():
-
                 self.traffic_signals[key] = TrafficSignal(
                     self,
                     key,
@@ -241,7 +242,6 @@ class SumoEnvironment(gym.Env):
                     reward_fn_value,
                     self.sumo
                 )
-
         else:
             self.traffic_signals = {ts: TrafficSignal(self,
                                                       ts,
@@ -270,8 +270,24 @@ class SumoEnvironment(gym.Env):
     def step(self, action):
         # No action, follow fixed TL defined in self.phases
         if action is None or action == {}:
-            for _ in range(self.delta_time):
-                self._sumo_step()
+
+
+
+                    # for ts in self.ts_ids:
+                    #     program = self.sumo.trafficlight.getAllProgramLogics(ts)[0].phases
+                    #     print(self.sumo.trafficlight.getNextSwitch(ts))
+                    #     if (self.sumo.trafficlight.getNextSwitch(ts) <= self.sim_step):
+                    #         self.traffic_signals[ts].set_next_phase(self.index%4)
+                           # self.sumo.trafficlight.setRedYellowGreenState(ts, program[(self.index ) % 8].state)
+                           # self.sumo.trafficlight.setPhaseDuration(ts, program[(self.index ) % 4].duration)
+                            #self.sumo.trafficlight.setPhase(ts,(self.index + 1)%8)
+                    #self._sumo_step()
+                    for ts in self.ts_ids:
+                        action[ts] = self.index%4
+                    self._apply_actions(action)
+                    self._run_steps()
+                    self.index =self.index + 1
+
         else:
             self._apply_actions(action)
             self._run_steps()
@@ -349,14 +365,25 @@ class SumoEnvironment(gym.Env):
 
     def _sumo_step(self):
         self.sumo.simulationStep()
-    
+
     def _get_system_info(self):
         vehicles = self.sumo.vehicle.getIDList()
         speeds = [self.sumo.vehicle.getSpeed(vehicle) for vehicle in vehicles]
         waiting_times = [self.sumo.vehicle.getWaitingTime(vehicle) for vehicle in vehicles]
         totals = self.sumo.vehicle.getIDCount()
-        self.loaded = self.loaded + self.sumo.simulation.getLoadedNumber()
 
+        newList = traci.vehicle.getIDList()
+
+        # determino numero entrati e usciti analizzando le liste
+        set1 = set(self.oldList)
+        set2 = set(newList)
+        temp1 = [x for x in set1 if x not in set2]  # elementi che non stanno più nella seconda lista ma prima c'erano vuol dire che sono usciti
+        temp2 = [x for x in set2 if x not in set1]  # elementi che non stanno nella prima lista ma nella seconda sono entrati
+        entrati = len(temp2)
+        usciti = len(temp1)
+        self.oldList = newList
+        self.loaded += entrati
+        self.arrived += usciti
         return {
             # In SUMO, a vehicle is considered halting if its speed is below 0.1 m/s
             'system_total_stopped': sum(int(speed < 0.1) for speed in speeds),
@@ -364,7 +391,8 @@ class SumoEnvironment(gym.Env):
             'system_mean_waiting_time': np.mean(waiting_times),
             'system_mean_speed': 0.0 if len(vehicles) == 0 else np.mean(speeds),
             'total_vehicle': totals,
-            'loaded' : self.loaded
+            'loaded' : self.loaded,
+            'arrived':self.arrived
         }
     
     def _get_per_agent_info(self):
@@ -462,7 +490,6 @@ class SumoEnvironmentPZ(AECEnv, EzPickle):
         self.infos = {agent: {} for agent in self.agents}
     
     def observation_space(self, agent):
-
         return self.observation_spaces[agent]
 
     def action_space(self, agent):

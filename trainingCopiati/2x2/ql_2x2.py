@@ -38,7 +38,7 @@ if __name__ == '__main__':
     prs.add_argument("-runs", dest="runs", type=int, default=1, help="Number of runs.\n")
     args = prs.parse_args()
     experiment_time = str(datetime.now()).split('.')[0]
-    out_csv = 'outputs/2x2/result-alpha0.1-gamma0.99_trainingCopiato_crescente(wait)leggero'
+    out_csv = 'outputs/2x2/result-alpha0.1-gamma0.99_trainingCopiato_crescente(wait)1M'
     output_file = 'output.csv'
     env = SumoEnvironment(net_file='nets/2x2grid/2x2.net.xml',
                           route_file=args.route,
@@ -54,6 +54,7 @@ if __name__ == '__main__':
     for run in range(1, args.runs+1):
         initial_states = env.reset()
         ql_agents = {ts: QLAgent(starting_state=env.encode(initial_states[ts], ts),
+                                 id = ts,
                                  state_space=env.observation_space,
                                  action_space=env.action_space,
                                  alpha=args.alpha,
@@ -73,7 +74,7 @@ if __name__ == '__main__':
                 s, r, done, _ = env.step(action=actions)
                 #queste righe non dovrebbero servire più  , learning fatto
                 for agent_id in ql_agents.keys():
-                     ql_agents[agent_id].learn(next_state=env.encode(s[agent_id], agent_id), reward=r[agent_id])
+                      ql_agents[agent_id].learn(next_state=env.encode(s[agent_id], agent_id), reward=r[agent_id])
 
         env.save_csv(out_csv, run)
         env.close()

@@ -4,7 +4,6 @@ import sys
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
-import random
 import pandas as pd
 from pathlib import Path
 from typing import Callable, Optional, Tuple, Union
@@ -24,7 +23,7 @@ import plotResult_single as pl
 env = None
 delta_time = 5
 metrics =[]
-oldList = []
+
 
 
 # def get_per_agent_info():
@@ -41,34 +40,17 @@ oldList = []
 #     info['agents_total_accumulated_waiting_time'] = sum(accumulated_waiting_time)
 #     return info
 def get_system_info():
-    global loaded
-    global arrived
-    global oldList
     vehicles = traci.vehicle.getIDList()
     speeds = [traci.vehicle.getSpeed(vehicle) for vehicle in vehicles]
     waiting_times = [traci.vehicle.getWaitingTime(vehicle) for vehicle in vehicles]
     totals = traci.vehicle.getIDCount()
-    l = traci.vehicle.getIDList()
-
-    #determino numero entrati e usciti analizzando le liste
-    set1 = set(oldList)
-    set2 = set(l)
-    temp1 = [x for x in set1 if x not in set2]  #elementi che non stanno più nella seconda lista ma prima c'erano vuol dire che sono usciti
-    temp2 = [x for x in set2 if x not in set1] #elementi che non stanno nella prima lista ma nella seconda sono entrati
-    entrati = len(temp2)
-    usciti = len(temp1)
-    oldList = l
-    loaded  +=  entrati
-    arrived += usciti
     return {
         # In SUMO, a vehicle is considered halting if its speed is below 0.1 m/s
         'system_total_stopped': sum(int(speed < 0.1) for speed in speeds),
         'system_total_waiting_time': sum(waiting_times),
         'system_mean_waiting_time': np.mean(waiting_times),
         'system_mean_speed': 0.0 if len(vehicles) == 0 else np.mean(speeds),
-        'total_vehicle': totals,
-        'loaded': loaded,
-        'arrived': arrived
+        'total_vehicle': totals
     }
 def computeInfo():
     info = {'step': traci.simulation.getTime()}
@@ -77,38 +59,21 @@ def computeInfo():
 
     metrics.append(info)
     return info
-def compute_dones(tsId,seconds):
-     dones = {ts_id: False for ts_id in tsId}
-     dones['__all__'] = traci.simulation.getTime() >= (seconds )
-     return dones
-def run(seconds,run,programs,tsId):
+
+def run(seconds,run,programs):
     index=0
-    done = {'__all__': False}
-    endPhase ={}
-    for ts in tsId:
-        endPhase[int(ts)] = 0
-    while not done['__all__']:
-        for ts in tsId:
+    while traci.simulation.getTime()<seconds:
+        for ts in traci.trafficlight.getIDList():
+            index = index % 8
+            traci.trafficlight.setPhase(ts,index)
+            endPhase= traci.trafficlight.getNextSwitch(ts)
+        while(traci.simulation.getTime()<endPhase):
+            if traci.simulation.getTime()%5==0:
+                info = computeInfo()
+            traci.simulationStep()
+        index = index + 1
 
-            if(not (traci.simulation.getTime()<endPhase[int(ts)])):
-                i = traci.trafficlight.getPhase(ts)
-                index = (i + 1) % 8
-                traci.trafficlight.setPhase(ts, index)
-                endPhase[int(ts)] = traci.trafficlight.getNextSwitch(ts)
-            else:
-                traci.simulationStep()
-                if (traci.simulation.getTime()%5==0): #per avere stessi timestep dei file con rl
-                    info = computeInfo()
-        done = compute_dones(tsId, seconds)
-        if done['__all__']:  # se è terminato il tempo interrompo  l'attuale fase
-            traci.close()
-
-
-
-
-
-
-
+    traci.close()
 
 def save_csv( out_csv_name, run):
         if out_csv_name is not None:
@@ -150,21 +115,14 @@ if __name__ == '__main__':
     for runs in range(1, args.runs+1):
         metrics = []
         #inStates = env.reset()
-        global loaded
-        global arrived
-        loaded = 0
-        arrived = 0
         traci.start(sumo_cmd)
         if args.gui :
             traci.gui.setSchema(traci.gui.DEFAULT_VIEW, "real world")
-        tsId = traci.trafficlight.getIDList()
-        for ts in tsId:
+        for ts in traci.trafficlight.getIDList():
             programs = traci.trafficlight.getAllProgramLogics(ts)
             logic = programs[0]
             traci.trafficlight.setProgramLogic(ts, logic)
-            index = random.randint(0,7)
-            traci.trafficlight.setPhase(ts, index)
-        run(args.seconds,runs,programs,tsId) #da sistemare
+        run(args.seconds,runs,programs) #da sistemare
 
         if runs!=0:
           save_csv(out_csv, runs)
