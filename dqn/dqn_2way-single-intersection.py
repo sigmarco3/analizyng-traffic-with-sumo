@@ -15,9 +15,9 @@ import traci
 
 if __name__ == '__main__':
 
-    env = SumoEnvironment(net_file='nets/2x2/2x2.net.xml',
-                            route_file='nets/2x2/routes.rou.xml',
-                            out_csv_name='outputs/2x2/dqn',
+    env = SumoEnvironment(net_file='nets/2way-single-intersection/single-intersection.net.xml',
+                            route_file='nets/2way-single-intersection/single-intersection-curriculum.rou.xml',
+                            out_csv_name='outputs/single_intersection/dqn',
                             single_agent=True,
                             use_gui=False,
                             num_seconds=100000,
@@ -36,3 +36,5 @@ if __name__ == '__main__':
         verbose=1
     )
     model.learn(total_timesteps=100000)
+    model.save("dqn_singolo")
+    m = model.learn("dqn_singolo")
