@@ -35,7 +35,7 @@ class QLAgent:
         #choose action
         
         #self.action = self.exploration.choose(self.q_table, self.state, self.action_space)
-        print("id :" , self.id, "reward :",self.q_table[self.state])
+        #print("id :" , self.id, "reward :",self.q_table[self.state])
         self.action = np.argmax(self.q_table[self.state])
         return self.action
 

@@ -57,10 +57,10 @@ if __name__ == '__main__':
     decay = 1
     runs = 4
 
-    env = SumoEnvironment(net_file='nets/4x4-Lucas/4x4.net.xml',
-                          route_file='nets/4x4-Lucas/4x4c1c2c1c2.rou.xml',
-                          use_gui=True,
-                          num_seconds=2000,
+    env = SumoEnvironment(net_file='nets/4x4/4x4.net.xml',
+                          route_file='nets/4x4/4x4c1c2c1c2.rou.xml',
+                          use_gui=False,
+                          num_seconds=10000,
                           min_green=5,
                           delta_time=5)
 
@@ -87,8 +87,8 @@ if __name__ == '__main__':
             for agent_id in s.keys():
                 ql_agents[agent_id].learn(next_state=env.encode(s[agent_id], agent_id), reward=r[agent_id])
 
-        env.save_csv('outputs/4x4/ql-4x4grid-variReward-2000sec(e auto)', run)
+        env.save_csv('outputs/4x4/ql-4x4grid-variReward-10000sec(e auto)', run)
         env.close()
-        if run==4:
-            plotResult('outputs/4x4/ql-4x4grid-variReward-2000sec(e auto)')
+        #if run==4:
+         #   plotResult('outputs/4x4/ql-4x4grid-variReward-10000sec(e auto)')
 

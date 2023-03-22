@@ -18,7 +18,7 @@ from pettingzoo.utils import agent_selector, wrappers
 from pettingzoo.utils.agent_selector import agent_selector
 from pettingzoo.utils.conversions import parallel_wrapper_fn
 
-from sumo_rl.environment.traffic_signal import TrafficSignal
+from environment.traffic_signal import TrafficSignal
 
 LIBSUMO = 'LIBSUMO_AS_TRACI' in os.environ
 
@@ -68,7 +68,7 @@ class SumoEnvironment(gym.Env):
         self, 
         net_file: str, 
         route_file: str,
-        reward_fn: Union[str, Callable, dict],
+
         out_csv_name: Optional[str] = None,
 
         use_gui: bool = False, 
@@ -83,7 +83,7 @@ class SumoEnvironment(gym.Env):
         min_green: int = 5, 
         max_green: int = 50, 
         single_agent: bool = False,
-
+        reward_fn: Union[str, Callable, dict] = 'diff-waiting-time',
         add_system_info: bool = True,
         add_per_agent_info: bool = True,
         sumo_seed: Union[str,int] = 'random', 
@@ -202,7 +202,7 @@ class SumoEnvironment(gym.Env):
                 self.disp = SmartDisplay(size=self.virtual_display)
                 self.disp.start()
                 print("Virtual display started.")
-        print(sumo_cmd)
+        
         if LIBSUMO:
             traci.start(sumo_cmd)
             self.sumo = traci
@@ -223,6 +223,7 @@ class SumoEnvironment(gym.Env):
         self.metrics = []
         self.loaded = 0
         self.arrived = 0
+        self.oldList = []
         if seed is not None:
             self.sumo_seed = seed
         self._start_simulation()
@@ -280,7 +281,7 @@ class SumoEnvironment(gym.Env):
                            # self.sumo.trafficlight.setRedYellowGreenState(ts, program[(self.index ) % 8].state)
                            # self.sumo.trafficlight.setPhaseDuration(ts, program[(self.index ) % 4].duration)
                             #self.sumo.trafficlight.setPhase(ts,(self.index + 1)%8)
-                    self._sumo_step()
+                    #self._sumo_step()
                     for ts in self.ts_ids:
                         action[ts] = self.index%4
                     self._apply_actions(action)
@@ -371,16 +372,16 @@ class SumoEnvironment(gym.Env):
         waiting_times = [self.sumo.vehicle.getWaitingTime(vehicle) for vehicle in vehicles]
         totals = self.sumo.vehicle.getIDCount()
 
-        l = traci.vehicle.getIDList()
+        newList = traci.vehicle.getIDList()
 
         # determino numero entrati e usciti analizzando le liste
-        set1 = set(oldList)
-        set2 = set(l)
+        set1 = set(self.oldList)
+        set2 = set(newList)
         temp1 = [x for x in set1 if x not in set2]  # elementi che non stanno più nella seconda lista ma prima c'erano vuol dire che sono usciti
         temp2 = [x for x in set2 if x not in set1]  # elementi che non stanno nella prima lista ma nella seconda sono entrati
         entrati = len(temp2)
         usciti = len(temp1)
-        oldList = l
+        self.oldList = newList
         self.loaded += entrati
         self.arrived += usciti
         return {

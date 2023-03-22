@@ -18,7 +18,7 @@ from pettingzoo.utils import agent_selector, wrappers
 from pettingzoo.utils.agent_selector import agent_selector
 from pettingzoo.utils.conversions import parallel_wrapper_fn
 
-from traffic_signal import TrafficSignal
+from environment.traffic_signal import TrafficSignal
 
 LIBSUMO = 'LIBSUMO_AS_TRACI' in os.environ
 
@@ -65,35 +65,35 @@ class SumoEnvironment(gym.Env):
     CONNECTION_LABEL = 0  # For traci multi-client support
 
     def __init__(
-            self,
-            net_file: str,
-            route_file: str,
-            reward_fn: Union[str, Callable, dict],
-            out_csv_name: Optional[str] = None,
+        self, 
+        net_file: str, 
+        route_file: str,
+        reward_fn: Union[str, Callable, dict],
+        out_csv_name: Optional[str] = None,
 
-            use_gui: bool = False,
-            virtual_display: Tuple[int, int] = (3200, 1800),
-            begin_time: int = 0,
-            num_seconds: int = 20000,
-            max_depart_delay: int = 100000,
-            waiting_time_memory: int = 1000,
-            time_to_teleport: int = -1,
-            delta_time: int = 5,
-            yellow_time: int = 2,
-            min_green: int = 5,
-            max_green: int = 50,
-            single_agent: bool = False,
+        use_gui: bool = False, 
+        virtual_display: Tuple[int,int] = (3200, 1800),
+        begin_time: int = 0, 
+        num_seconds: int = 20000, 
+        max_depart_delay: int = 100000,
+        waiting_time_memory: int = 1000,
+        time_to_teleport: int = -1, 
+        delta_time: int = 5, 
+        yellow_time: int = 2, 
+        min_green: int = 5, 
+        max_green: int = 50, 
+        single_agent: bool = False,
 
-            add_system_info: bool = True,
-            add_per_agent_info: bool = True,
-            sumo_seed: Union[str, int] = 'random',
-            fixed_ts: bool = False,
-            sumo_warnings: bool = True,
-            additional_sumo_cmd: Optional[str] = None,
-            render_mode: Optional[str] = None,
+        add_system_info: bool = True,
+        add_per_agent_info: bool = True,
+        sumo_seed: Union[str,int] = 'random', 
+        fixed_ts: bool = False,
+        sumo_warnings: bool = True,
+        additional_sumo_cmd: Optional[str] = None,
+        render_mode: Optional[str] = None,
     ) -> None:
         assert render_mode is None or render_mode in self.metadata["render_modes"], "Invalid render mode."
-        self.render_mode = render_mode
+        self.render_mode = render_mode  
         self.virtual_display = virtual_display
         self.disp = None
 
@@ -128,14 +128,14 @@ class SumoEnvironment(gym.Env):
         SumoEnvironment.CONNECTION_LABEL += 1
         self.sumo = None
         self.index = 0
-        self.loaded = 0
+        self.loaded =0
+        self.arrived = 0
         if LIBSUMO:
-            traci.start(
-                [sumolib.checkBinary('sumo'), '-n', self._net])  # Start only to retrieve traffic light information
+            traci.start([sumolib.checkBinary('sumo'), '-n', self._net])  # Start only to retrieve traffic light information
             conn = traci
         else:
-            traci.start([sumolib.checkBinary('sumo'), '-n', self._net], label='init_connection' + self.label)
-            conn = traci.getConnection('init_connection' + self.label)
+            traci.start([sumolib.checkBinary('sumo'), '-n', self._net], label='init_connection'+self.label)
+            conn = traci.getConnection('init_connection'+self.label)
         self.ts_ids = list(conn.trafficlight.getIDList())
 
         if isinstance(self.reward_fn, dict):
@@ -155,14 +155,14 @@ class SumoEnvironment(gym.Env):
         else:
             self.traffic_signals = {
                 ts: TrafficSignal(self,
-                                  ts,
-                                  self.delta_time,
-                                  self.yellow_time,
-                                  self.min_green,
-                                  self.max_green,
-                                  self.begin_time,
-                                  self.reward_fn,
-                                  conn) for ts in self.ts_ids
+                                ts,
+                                self.delta_time,
+                                self.yellow_time,
+                                self.min_green,
+                                self.max_green,
+                                self.begin_time,
+                                self.reward_fn,
+                                conn) for ts in self.ts_ids
             }
 
         conn.close()
@@ -202,7 +202,7 @@ class SumoEnvironment(gym.Env):
                 self.disp = SmartDisplay(size=self.virtual_display)
                 self.disp.start()
                 print("Virtual display started.")
-        print(sumo_cmd)
+
         if LIBSUMO:
             traci.start(sumo_cmd)
             self.sumo = traci
@@ -215,13 +215,15 @@ class SumoEnvironment(gym.Env):
 
     def reset(self, seed: Optional[int] = None, **kwargs):
         super().reset(seed=seed, **kwargs)
-        
+
         if self.run != 0:
             self.close()
             self.save_csv(self.out_csv_name, self.run)
         self.run += 1
         self.metrics = []
-
+        self.loaded = 0
+        self.arrived = 0
+        self.oldList = []
         if seed is not None:
             self.sumo_seed = seed
         self._start_simulation()
@@ -295,18 +297,17 @@ class SumoEnvironment(gym.Env):
         dones = self._compute_dones()
         terminated = False  # there are no 'terminal' states in this environment
         truncated = dones['__all__']  # episode ends when sim_step >= max_steps
-
+        info = self._compute_info()
 
         if self.single_agent:
-            return observations[self.ts_ids[0]], rewards[self.ts_ids[0]], terminated, truncated
+            return observations[self.ts_ids[0]], rewards[self.ts_ids[0]], terminated, truncated, info
         else:
-            return observations, rewards, dones
+            return observations, rewards, dones, info
 
     def _run_steps(self):
         time_to_act = False
         while not time_to_act:
             self._sumo_step()
-            info = self._compute_info()
             for ts in self.ts_ids:
                 self.traffic_signals[ts].update()
                 if self.traffic_signals[ts].time_to_act:
@@ -370,8 +371,19 @@ class SumoEnvironment(gym.Env):
         speeds = [self.sumo.vehicle.getSpeed(vehicle) for vehicle in vehicles]
         waiting_times = [self.sumo.vehicle.getWaitingTime(vehicle) for vehicle in vehicles]
         totals = self.sumo.vehicle.getIDCount()
-        self.loaded = self.loaded + self.sumo.simulation.getLoadedNumber()
-        arrived = self.sumo.simulation.getArrivedNumber()
+
+        newList = traci.vehicle.getIDList()
+
+        # determino numero entrati e usciti analizzando le liste
+        set1 = set(self.oldList)
+        set2 = set(newList)
+        temp1 = [x for x in set1 if x not in set2]  # elementi che non stanno più nella seconda lista ma prima c'erano vuol dire che sono usciti
+        temp2 = [x for x in set2 if x not in set1]  # elementi che non stanno nella prima lista ma nella seconda sono entrati
+        entrati = len(temp2)
+        usciti = len(temp1)
+        self.oldList = newList
+        self.loaded += entrati
+        self.arrived += usciti
         return {
             # In SUMO, a vehicle is considered halting if its speed is below 0.1 m/s
             'system_total_stopped': sum(int(speed < 0.1) for speed in speeds),
@@ -380,7 +392,7 @@ class SumoEnvironment(gym.Env):
             'system_mean_speed': 0.0 if len(vehicles) == 0 else np.mean(speeds),
             'total_vehicle': totals,
             'loaded' : self.loaded,
-            'arrived':arrived
+            'arrived':self.arrived
         }
     
     def _get_per_agent_info(self):
@@ -476,7 +488,7 @@ class SumoEnvironmentPZ(AECEnv, EzPickle):
         self.terminations = {a: False for a in self.agents}
         self.truncations = {a: False for a in self.agents}
         self.infos = {agent: {} for agent in self.agents}
-
+    
     def observation_space(self, agent):
         return self.observation_spaces[agent]
 

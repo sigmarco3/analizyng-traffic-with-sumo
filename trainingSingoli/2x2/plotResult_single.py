@@ -68,7 +68,7 @@ def plotResult(file,file2):
         df = pd.read_csv(file2 + '_conn0_run1.csv')  #leggo i file con il training singolo
         # definiamo le dimensioni della finestra in pollici ed il dpi
 
-        x = df['step'][0:2001]
+        x = df['step']
         t = df['total_vehicle']
         y = df['system_total_waiting_time']
         z = df['system_total_stopped']
@@ -149,7 +149,7 @@ def plotResult(file,file2):
         std_error = np.std(z1, ddof=1) / np.sqrt(len(z1))
         print(std_error)
 
-        plt.errorbar(time,z1,yerr=std_error,marker="o",color="blue",markersize=2, label="training copiato")  #auto ferme su auto circolanti in funzione del tempo
+        plt.errorbar(time,z1,yerr=std_error,marker="o",color="blue",markersize=2, label="training singolo")  #auto ferme su auto circolanti in funzione del tempo
         print("valor medio di total stopped :", zc1.mean())
         print("massimo di total stopped :" , zc1.max(), "su max veicoli :", m_v.max())
         plt.xlabel("time-step",size=12)
@@ -162,7 +162,7 @@ def plotResult(file,file2):
 
 
         #secondo grafico medie auto in 1000 secondi
-        m_veh = np.array(tm2[0:2000:200])
+        m_veh = np.arange(10)
         for i in range(0, len(m_veh) ):
             m_veh[i] = np.mean(tm2[(i * 200):((i + 1) * 200)])
 
@@ -194,13 +194,13 @@ def plotResult(file,file2):
         print("arrivati : " ,sm2)
         tput1 = ar1/sc1
         std_error = np.std(tput1, ddof=1) / np.sqrt(len(tput1))
-        plt.errorbar(time, tput1, yerr=std_error, marker="o", color="blue", markersize=5, label="training copiato")
+        plt.errorbar(time, tput1, yerr=std_error, marker="o", color="blue", markersize=5, label="una reward")
         tput2 = ar2/sc2
         std_error = np.std(tput2, ddof=1) / np.sqrt(len(tput2))
-        plt.errorbar(time, tput2, yerr=std_error, marker="x", color="orange", markersize=5, label="semaforo standard")
+        plt.errorbar(time, tput2, yerr=std_error, marker="x", color="orange", markersize=5, label="reward diverse")
         plt.xlabel("time-step", size=12)
         plt.xticks(time, time)
-        plt.title("rete 2x2 reward 'wait' traffico crescente misura troughput")
+        plt.title("rete 4x4  misura troughput")
         plt.ylabel("system throughput", size=12)
         plt.legend()
         plt.grid()
@@ -209,7 +209,7 @@ def plotResult(file,file2):
 
         std_error = np.std(um1, ddof=1) / np.sqrt(len(um1))
         # create chart
-        plt.errorbar(time,uc1,yerr=std_error,marker="o",color="blue",markersize=2, label="training copiato")
+        plt.errorbar(time,uc1,yerr=std_error,marker="o",color="blue",markersize=2, label="reward uguali")
         print("valor medio di mean waiting time :" ,uc1.mean())
         # for x,y in zip (m_v,uc1):
         #     label = int(x)
@@ -221,7 +221,7 @@ def plotResult(file,file2):
         print("massimo di mean waiting time :", uc1.max())
         std_error = np.std(um2, ddof=1) / np.sqrt(len(um2))
         # create chart
-        plt.errorbar(time,uc2,yerr=std_error,marker="x",color="orange",markersize=2,label="semaforo standard")
+        plt.errorbar(time,uc2,yerr=std_error,marker="x",color="orange",markersize=2,label="reward diverse")
 
         print("valor medio di mean waiting time :" ,uc2.mean())
 
@@ -245,7 +245,7 @@ def plotResult(file,file2):
 
         std_error = np.std(vm1, ddof=1) / np.sqrt(len(vm1))
         # create chart
-        plt.errorbar(time, vc1, yerr=std_error, marker="o",markersize=2, color="blue", label="training copiato")
+        plt.errorbar(time, vc1, yerr=std_error, marker="o",markersize=2, color="blue", label="training singolo")
 
 
         # for x, y in zip(m_v, vc1):
@@ -265,5 +265,5 @@ def plotResult(file,file2):
         plt.ylabel("system mean speed(m/s)")
         plt.show()
 if __name__ == '__main__':
-    file2='D:/programmi/sumo/esperimenti semafori/Reinforcement-learning-in-traffic-light/outputs/2x2/result-2x2 crescente-static'
-    plotResult('D:/programmi/sumo/esperimenti semafori/Reinforcement-learning-in-traffic-light/outputs/2x2/result-alpha0.1-gamma0.99_trainingCopiato_crescente(wait)1M',file2)
+        file2 = 'D:/programmi/sumo/esperimenti semafori/Reinforcement-learning-in-traffic-light/outputs/4x4/ql-4x4grid-variReward-10000sec(e auto)'
+        plotResult('D:/programmi/sumo/esperimenti semafori/Reinforcement-learning-in-traffic-light/outputs/4x4/ql-4x4grid-unareward',file2)

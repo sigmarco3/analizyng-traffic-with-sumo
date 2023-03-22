@@ -125,6 +125,8 @@ class SumoEnvironment(gym.Env):
         self.label = str(SumoEnvironment.CONNECTION_LABEL)
         SumoEnvironment.CONNECTION_LABEL += 1
         self.sumo = None
+        self.loaded = 0
+        self.arrived = 0
 
         if LIBSUMO:
             traci.start([sumolib.checkBinary('sumo'), '-n', self._net])  # Start only to retrieve traffic light information
@@ -224,7 +226,9 @@ class SumoEnvironment(gym.Env):
 
     def reset(self, seed: Optional[int] = None, **kwargs):
         super().reset(seed=seed, **kwargs)
-        
+        self.loaded = 0
+        self.arrived = 0
+        self.oldList = []
         if self.run != 0:
             self.close()
             self.save_csv(self.out_csv_name, self.run)
@@ -255,11 +259,11 @@ class SumoEnvironment(gym.Env):
             for ts in self.ts_ids:
                 x = int(ts) % 4
                 if x == 0:
-                    r = 'pressure'
+                    r = 'queue'
                 elif x == 1:
                     r = 'diff-waiting-time'
                 elif x == 2:
-                    r = 'queue'
+                    r = 'pressure'
                 else:
                     r = 'average-speed'
 
@@ -375,14 +379,32 @@ class SumoEnvironment(gym.Env):
         speeds = [self.sumo.vehicle.getSpeed(vehicle) for vehicle in vehicles]
         waiting_times = [self.sumo.vehicle.getWaitingTime(vehicle) for vehicle in vehicles]
         totals = self.sumo.vehicle.getIDCount()
+
+        l = traci.vehicle.getIDList()
+
+        # determino numero entrati e usciti analizzando le liste
+        set1 = set(self.oldList)
+        set2 = set(l)
+        temp1 = [x for x in set1 if
+                 x not in set2]  # elementi che non stanno più nella seconda lista ma prima c'erano vuol dire che sono usciti
+        temp2 = [x for x in set2 if
+                 x not in set1]  # elementi che non stanno nella prima lista ma nella seconda sono entrati
+        entrati = len(temp2)
+        usciti = len(temp1)
+        oldList = l
+        self.loaded += entrati
+        self.arrived += usciti
         return {
             # In SUMO, a vehicle is considered halting if its speed is below 0.1 m/s
             'system_total_stopped': sum(int(speed < 0.1) for speed in speeds),
             'system_total_waiting_time': sum(waiting_times),
             'system_mean_waiting_time': np.mean(waiting_times),
             'system_mean_speed': 0.0 if len(vehicles) == 0 else np.mean(speeds),
-            'total_vehicle': totals
+            'total_vehicle': totals,
+            'loaded': self.loaded,
+            'arrived': self.arrived
         }
+
     
     def _get_per_agent_info(self):
         stopped = [self.traffic_signals[ts].get_total_queued() for ts in self.ts_ids]

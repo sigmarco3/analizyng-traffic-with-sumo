@@ -256,5 +256,5 @@ def plotResult(file,file2):
         plt.ylabel("system mean speed(Km/h)",size=12)
         plt.show()
 if __name__ == '__main__':
-    file2='D:/programmi/sumo/esperimenti semafori/Reinforcement-learning-in-traffic-light/outputs/4x4/result_trainingSingoli_crescente(wait)corretto'
-    plotResult('D:/programmi/sumo/esperimenti semafori/Reinforcement-learning-in-traffic-light/outputs/4x4/result_trainingCopiato_crescente(wait)corretto',file2)
+    file2='D:/programmi/sumo/esperimenti semafori/Reinforcement-learning-in-traffic-light/outputs/4x4/ql-4x4grid-variReward-10000sec(e auto)'
+    plotResult('D:/programmi/sumo/esperimenti semafori/Reinforcement-learning-in-traffic-light/outputs/4x4/ql-4x4grid-unareward',file2)

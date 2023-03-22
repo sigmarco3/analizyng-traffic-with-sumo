@@ -59,8 +59,6 @@ class TrafficSignal:
         self.lanes = list(dict.fromkeys(self.sumo.trafficlight.getControlledLanes(self.id)))  # Remove duplicates and keep order
         self.out_lanes = [link[0][1] for link in self.sumo.trafficlight.getControlledLinks(self.id) if link]
         self.out_lanes = list(set(self.out_lanes))
-        print("out:",self.out_lanes)
-        print("lanes :",self.lanes)
         self.lanes_lenght = {lane: self.sumo.lane.getLength(lane) for lane in self.lanes + self.out_lanes}
 
         self.observation_space = spaces.Box(low=np.zeros(self.num_green_phases+1+2*len(self.lanes), dtype=np.float32), high=np.ones(self.num_green_phases+1+2*len(self.lanes), dtype=np.float32))
@@ -73,7 +71,6 @@ class TrafficSignal:
 
     def build_phases(self):
         phases = self.sumo.trafficlight.getAllProgramLogics(self.id)[0].phases
-
         if self.env.fixed_ts:
             self.num_green_phases = len(phases)//2  # Number of green phases == number of phases (green+yellow) divided by 2
             return
@@ -86,7 +83,7 @@ class TrafficSignal:
                 self.green_phases.append(self.sumo.trafficlight.Phase(60, state))
         self.num_green_phases = len(self.green_phases)
         self.all_phases = self.green_phases.copy()
-        print("num green : ",self.num_green_phases)
+
         for i, p1 in enumerate(self.green_phases):
             for j, p2 in enumerate(self.green_phases):
                 if i == j: continue
@@ -103,7 +100,6 @@ class TrafficSignal:
         logic = programs[0]
         logic.type = 0
         logic.phases = self.all_phases
-        print("phases : ", logic.phases)
         self.sumo.trafficlight.setProgramLogic(self.id, logic)
         self.sumo.trafficlight.setRedYellowGreenState(self.id, self.all_phases[0].state)
 
@@ -146,7 +142,7 @@ class TrafficSignal:
         return observation
             
     def compute_reward(self):
-
+       
         if type(self.reward_fn) is str:
             if self.reward_fn == 'diff-waiting-time':
                 self.last_reward = self._diff_waiting_time_reward()
@@ -158,12 +154,14 @@ class TrafficSignal:
                 self.last_reward = self._pressure_reward()
             else:
                 raise NotImplementedError(f'Reward function {self.reward_fn} not implemented')
+
         else:
             self.last_reward = self.reward_fn(self)
-        #print("r:",self.last_reward)
+
         return self.last_reward
     
     def _pressure_reward(self):
+
         return self.get_pressure()
     
     def _average_speed_reward(self):
@@ -201,9 +199,11 @@ class TrafficSignal:
             return 1.0
         for v in vehs:
             avg_speed += self.sumo.vehicle.getSpeed(v) / self.sumo.vehicle.getAllowedSpeed(v)
-        return avg_speed / len(vehs)
+
+
 
     def get_pressure(self):
+
         return sum(self.sumo.lane.getLastStepVehicleNumber(lane) for lane in self.out_lanes) - sum(self.sumo.lane.getLastStepVehicleNumber(lane) for lane in self.lanes)
 
     def get_out_lanes_density(self):
@@ -219,6 +219,7 @@ class TrafficSignal:
         return [min(1, queue) for queue in lanes_queue]
 
     def get_total_queued(self):
+
         return sum(self.sumo.lane.getLastStepHaltingNumber(lane) for lane in self.lanes)
 
     def _get_veh_list(self):
