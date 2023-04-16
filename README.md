@@ -1,4 +1,4 @@
-esperimenti  in larga scala del reinforcement learning su semafori
+esperimenti  in larga scala del reinforcement learning su semafori\n
 Nella cartella trainingSingoli ci sono gli script per il training indipendente (nella cartella training in ogni rete) e per il test 
 Nella cartella trainingCopiato ci sono gli script per eseguire il test con training copiato dal singolo incrocio
 Nella cartella nets ci sono i vari file .net e .rou
