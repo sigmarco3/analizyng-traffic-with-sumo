@@ -6,7 +6,7 @@ from ast import literal_eval
 class QLAgent:
     def readTable(self):
         dict={}
-        inputFile="tabelle/tabelleSingole 2x2-queue-1M"+self.id+".csv"
+        inputFile="tabelle/tabelleSingole 2x2-wait-1M"+self.id+".csv"
         with open(inputFile,'r',newline='') as file_name:
             reader=csv.reader(file_name,delimiter=';')
             for row in reader:

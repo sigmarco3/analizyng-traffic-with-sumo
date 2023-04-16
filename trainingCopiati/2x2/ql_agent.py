@@ -14,9 +14,6 @@ class QLAgent:
                     k=literal_eval(k)
                     v=literal_eval(v)
                     dict[k] = v
-
-
-
         return dict
 
     def __init__(self,id, starting_state, state_space, action_space, alpha=0.5, gamma=0.95, exploration_strategy=EpsilonGreedy()):

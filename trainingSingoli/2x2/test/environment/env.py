@@ -202,7 +202,7 @@ class SumoEnvironment(gym.Env):
                 self.disp = SmartDisplay(size=self.virtual_display)
                 self.disp.start()
                 print("Virtual display started.")
-
+        print(sumo_cmd)
         if LIBSUMO:
             traci.start(sumo_cmd)
             self.sumo = traci

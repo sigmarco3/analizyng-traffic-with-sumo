@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
     prs = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   description="""Q-Learning 3x3""")
-    prs.add_argument("-route", dest="route", type=str, default='nets/3x3grid/3x3test.rou.xml', help="Route definition xml file.\n")
+    prs.add_argument("-route", dest="route", type=str, default='nets/3x3grid/random100.rou.xml', help="Route definition xml file.\n")
     prs.add_argument("-a", dest="alpha", type=float, default=0.1, required=False, help="Alpha learning rate.\n")
     prs.add_argument("-g", dest="gamma", type=float, default=0.99, required=False, help="Gamma discount rate.\n")
     prs.add_argument("-e", dest="epsilon", type=float, default=0.05, required=False, help="Epsilon.\n")
@@ -38,7 +38,7 @@ if __name__ == '__main__':
     prs.add_argument("-runs", dest="runs", type=int, default=1, help="Number of runs.\n")
     args = prs.parse_args()
     experiment_time = str(datetime.now()).split('.')[0]
-    out_csv = 'outputs/3x3/result-alpha0.1-gamma0.99_test_crescente(wait)1M'
+    out_csv = 'outputs/3x3/result-alpha0.1-gamma0.99_test_random(wait)1M'
 
     env = SumoEnvironment(net_file='nets/3x3grid/3x3.net.xml',
                           route_file=args.route,

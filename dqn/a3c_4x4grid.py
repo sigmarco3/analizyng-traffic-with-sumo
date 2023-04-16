@@ -5,14 +5,17 @@ if 'SUMO_HOME' in os.environ:
     sys.path.append(tools)
 else:
     sys.exit("Please declare the environment variable 'SUMO_HOME'")
-import pandas as pd
+#import pandas as pd
 import ray
 from ray import tune
-from ray.rllib.algorithms.a3c.a3c import A3C
+from ray.rllib.agents.a3c.a3c import A3CTrainer
+from ray.rllib.agents.a3c.a3c_tf_policy import A3CTFPolicy
+
+
 from ray.tune.registry import register_env
 from gym.spaces import Discrete
 #from ray.rllib.algorithms.a3c.a3c_tf_policy import A3CTF2Policy
-from ray.rllib.env import PettingZooEnv
+from ray.rllib.env.wrappers.pettingzoo_env import PettingZooEnv
 from ray.tune.registry import register_env
 from gym import spaces
 import numpy as np
@@ -30,11 +33,11 @@ if __name__ == '__main__':
                                                                 use_gui=False,
                                                                 num_seconds=80000)))
 
-    trainer = A3C(env="4x4grid", config={
+    trainer = A3CTrainer(env="4x4grid", config={
 
         "multiagent": {
             "policies": {
-                '0': ("MlpPolicy", spaces.Box(low=np.zeros(11), high=np.ones(11)), spaces.Discrete(2), {})
+                '0': (A3CTFPolicy, spaces.Box(low=np.zeros(11), high=np.ones(11)), spaces.Discrete(2), {})
             },
             "policy_mapping_fn": (lambda id: '0')  # Traffic lights are always controlled by this policy
         },

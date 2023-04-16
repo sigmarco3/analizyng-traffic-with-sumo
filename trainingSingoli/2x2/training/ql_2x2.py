@@ -34,11 +34,11 @@ if __name__ == '__main__':
     prs.add_argument("-gui", action="store_true", default=False, help="Run with visualization on SUMO.\n")
     prs.add_argument("-fixed", action="store_true", default=False, help="Run with fixed timing traffic signals.\n")
     prs.add_argument("-s", dest="seconds", type=int, default=1000000, required=False, help="Number of simulation seconds.\n")
-    prs.add_argument("-r", dest="reward", type=str, default='queue', required=False, help="Reward function: [-r queue] for average queue reward or [-r wait] for waiting time reward.\n")
+    prs.add_argument("-r", dest="reward", type=str, default='diff-waiting-time', required=False, help="Reward function: [-r queue] for average queue reward or [-r wait] for waiting time reward.\n")
     prs.add_argument("-runs", dest="runs", type=int, default=1, help="Number of runs.\n")
     args = prs.parse_args()
     experiment_time = str(datetime.now()).split('.')[0]
-    out_csv = 'outputs/2x2/result-alpha0.1-gamma0.99 trainingSingoli_queue'
+    out_csv = 'outputs/2x2/result-alpha0.1-gamma0.99 trainingSingoli_wait'
 
     env = SumoEnvironment(net_file='nets/2x2grid/2x2.net.xml',
                           route_file=args.route,
@@ -77,7 +77,7 @@ if __name__ == '__main__':
         #env.save_csv(out_csv, run)
         env.close()
         for ts in ql_agents.keys():
-            output_file = 'tabelleSingole 2x2-queue-1M' + ts +".csv"
+            output_file = 'tabelleSingole 2x2-wait-1M' + ts +".csv"
             table = ql_agents[ts].q_table
             #scrivo su file la tabella , commento perchè va dopo il learning
             try:

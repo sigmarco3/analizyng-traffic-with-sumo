@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
     prs = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                   description="""Q-Learning 4x4""")
-    prs.add_argument("-route", dest="route", type=str, default='nets/4x4/4x4crescente.rou.xml', help="Route definition xml file.\n")
+    prs.add_argument("-route", dest="route", type=str, default='nets/4x4/random100.rou.xml', help="Route definition xml file.\n")
     prs.add_argument("-a", dest="alpha", type=float, default=0.1, required=False, help="Alpha learning rate.\n")
     prs.add_argument("-g", dest="gamma", type=float, default=0.99, required=False, help="Gamma discount rate.\n")
     prs.add_argument("-e", dest="epsilon", type=float, default=0.05, required=False, help="Epsilon.\n")
@@ -33,12 +33,12 @@ if __name__ == '__main__':
     prs.add_argument("-maxgreen", dest="max_green", type=int, default=30, required=False, help="Maximum green time.\n")
     prs.add_argument("-gui", action="store_true", default=False, help="Run with visualization on SUMO.\n")
     prs.add_argument("-fixed", action="store_true", default=False, help="Run with fixed timing traffic signals.\n")
-    prs.add_argument("-s", dest="seconds", type=int, default=10000, required=False, help="Number of simulation seconds.\n")
+    prs.add_argument("-s", dest="seconds", type=int, default=100000, required=False, help="Number of simulation seconds.\n")
     prs.add_argument("-r", dest="reward", type=str, default='diff-waiting-time', required=False, help="Reward function: [-r queue] for average queue reward or [-r wait] for waiting time reward.\n")
     prs.add_argument("-runs", dest="runs", type=int, default=1, help="Number of runs.\n")
     args = prs.parse_args()
     experiment_time = str(datetime.now()).split('.')[0]
-    out_csv = 'outputs/4x4/result_trainingSingoli_crescente(wait)corretto'
+    out_csv = 'outputs/4x4/result_trainingSingoli_crescente(wait)1M'
 
     env = SumoEnvironment(net_file='nets/4x4/4x4b.net.xml',
                           route_file=args.route,

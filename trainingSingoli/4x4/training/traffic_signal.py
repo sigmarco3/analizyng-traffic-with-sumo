@@ -142,7 +142,7 @@ class TrafficSignal:
         return observation
             
     def compute_reward(self):
-        print("in ts :", self.reward_fn)
+
         if type(self.reward_fn) is str:
             if self.reward_fn == 'diff-waiting-time':
                 self.last_reward = self._diff_waiting_time_reward()
@@ -156,7 +156,7 @@ class TrafficSignal:
                 raise NotImplementedError(f'Reward function {self.reward_fn} not implemented')
         else:
             self.last_reward = self.reward_fn(self)
-        print("ris :",self.last_reward)
+
         return self.last_reward
     
     def _pressure_reward(self):
@@ -201,8 +201,7 @@ class TrafficSignal:
 
 
     def get_pressure(self):
-        print("pressure :" , sum(self.sumo.lane.getLastStepVehicleNumber(lane) for lane in self.out_lanes) - sum(
-            self.sumo.lane.getLastStepVehicleNumber(lane) for lane in self.lanes))
+       
         return sum(self.sumo.lane.getLastStepVehicleNumber(lane) for lane in self.out_lanes) - sum(self.sumo.lane.getLastStepVehicleNumber(lane) for lane in self.lanes)
 
     def get_out_lanes_density(self):

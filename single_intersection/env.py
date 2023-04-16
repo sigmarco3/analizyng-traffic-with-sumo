@@ -202,7 +202,7 @@ class SumoEnvironment(gym.Env):
                 self.disp = SmartDisplay(size=self.virtual_display)
                 self.disp.start()
                 print("Virtual display started.")
-        print(sumo_cmd)
+
         if LIBSUMO:
             traci.start(sumo_cmd)
             self.sumo = traci
@@ -272,20 +272,9 @@ class SumoEnvironment(gym.Env):
 
 
 
-                    # for ts in self.ts_ids:
-                    #     program = self.sumo.trafficlight.getAllProgramLogics(ts)[0].phases
-                    #     print(self.sumo.trafficlight.getNextSwitch(ts))
-                    #     if (self.sumo.trafficlight.getNextSwitch(ts) <= self.sim_step):
-                    #         self.traffic_signals[ts].set_next_phase(self.index%4)
-                           # self.sumo.trafficlight.setRedYellowGreenState(ts, program[(self.index ) % 8].state)
-                           # self.sumo.trafficlight.setPhaseDuration(ts, program[(self.index ) % 4].duration)
-                            #self.sumo.trafficlight.setPhase(ts,(self.index + 1)%8)
+
                     self._sumo_step()
-                    for ts in self.ts_ids:
-                        action[ts] = self.index%4
-                    self._apply_actions(action)
-                    self._run_steps()
-                    self.index =self.index + 1
+                    
 
         else:
             self._apply_actions(action)

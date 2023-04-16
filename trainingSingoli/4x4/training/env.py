@@ -18,7 +18,7 @@ from pettingzoo.utils import agent_selector, wrappers
 from pettingzoo.utils.agent_selector import agent_selector
 from pettingzoo.utils.conversions import parallel_wrapper_fn
 
-from sumo_rl.environment.traffic_signal import TrafficSignal
+from traffic_signal import TrafficSignal
 
 LIBSUMO = 'LIBSUMO_AS_TRACI' in os.environ
 

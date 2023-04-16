@@ -1,3 +1,5 @@
+#versione senza la lettura di auto arrivate e caricate , per queste misure c'è plotResult_singleConArrivati
+
 import sys
 import pandas as pd
 import csv
@@ -14,8 +16,7 @@ def plotResult(file,file2):
         z = df['system_total_stopped']
         u = df['system_mean_waiting_time']
         v = df['system_mean_speed']
-        a = df['arrived']
-        s = df['loaded']
+
 
         df1 = pd.read_csv(file + '_conn0_run2.csv')
         y1 = df['system_total_waiting_time']
@@ -25,15 +26,13 @@ def plotResult(file,file2):
         z1 = df1['system_total_stopped']
         u1 = df1['system_mean_waiting_time']
         v1 = df1['system_mean_speed']
-        a1 = df['arrived']
-        s1 = df['loaded']
+
         df2 = pd.read_csv(file + '_conn0_run3.csv')
         y2 = df2['system_total_waiting_time']
         z2 = df2['system_total_stopped']
         u2 = df2['system_mean_waiting_time']
         v2 = df2['system_mean_speed']
-        a2 = df['arrived']
-        s2 = df2['loaded']
+
 
         t2 = df2['total_vehicle']
         df3 = pd.read_csv(file + '_conn0_run4.csv')
@@ -41,8 +40,7 @@ def plotResult(file,file2):
         z3 = df3['system_total_stopped']
         u3 = df3['system_mean_waiting_time']
         v3 = df3['system_mean_speed']
-        a3 = df['arrived']
-        s3= df3['loaded']
+
 
         t3 = df3['total_vehicle']
         ym1 = (y + y1 + y2 + y3) / 4
@@ -50,8 +48,7 @@ def plotResult(file,file2):
         tm1 = (t + t1 +t2 +t3)/4
         um1 = (u + u1 + u2 + u3) / 4
         vm1 = (v + v1 + v2 + v3) / 4
-        sm1 = (s + s1 +s2 +s3)/4 #media veicoli caricati
-        am1 = (a+a1+a2+a3)/4 #media veicoli arrivati
+
 
         #plt.ylabel("system_total_waiting time")
 
@@ -74,8 +71,8 @@ def plotResult(file,file2):
         z = df['system_total_stopped']
         u = df['system_mean_waiting_time']
         v = df['system_mean_speed']
-        a = df['arrived']
-        s = df['loaded']
+        #a = df['arrived']
+        #s = df['loaded']
 
         df1 = pd.read_csv(file2 + '_conn0_run2.csv')
         y1 = df['system_total_waiting_time']
@@ -84,15 +81,15 @@ def plotResult(file,file2):
         z1 = df1['system_total_stopped']
         u1 = df1['system_mean_waiting_time']
         v1 = df1['system_mean_speed']
-        a1 = df['arrived']
-        s1 = df['loaded']
+        #a1 = df['arrived']
+        #s1 = df['loaded']
         df2 = pd.read_csv(file2 + '_conn0_run3.csv')
         y2 = df2['system_total_waiting_time']
         z2 = df2['system_total_stopped']
         u2 = df2['system_mean_waiting_time']
         v2 = df2['system_mean_speed']
-        a2 = df['arrived']
-        s2 = df2['loaded']
+        #a2 = df['arrived']
+        #s2 = df2['loaded']
 
         t2 = df2['total_vehicle']
         df3 = pd.read_csv(file2 + '_conn0_run4.csv')
@@ -100,8 +97,8 @@ def plotResult(file,file2):
         z3 = df3['system_total_stopped']
         u3 = df3['system_mean_waiting_time']
         v3 = df3['system_mean_speed']
-        a3 = df['arrived']
-        s3= df3['loaded']
+        # a3 = df['arrived']
+        # s3= df3['loaded']
 
         t3 = df3['total_vehicle']
         ym2 = (y + y1 + y2 + y3) / 4
@@ -109,8 +106,8 @@ def plotResult(file,file2):
         tm2 = (t + t1 + t2 + t3) / 4   #medio auto circolanti
         um2 = (u + u1 + u2 + u3) / 4   #tempo medio di attesa
         vm2 = (v + v1 + v2 + v3) / 4   #velocità media secondo file
-        am2 = (a +a1 +a2+a3)/4    #numero veicoli arrivati a destinazione
-        sm2 = (s +s1+s2+s3)/4 #numero auto caricate
+        # am2 = (a +a1 +a2+a3)/4    #numero veicoli arrivati a destinazione
+        # sm2 = (s +s1+s2+s3)/4 #numero auto caricate
         # create chart
 
 
@@ -139,8 +136,7 @@ def plotResult(file,file2):
             zc1[i]=np.mean(zm1[(i * 200):((i + 1) * 200)])
             uc1[i] = np.mean(um1[(i * 200):((i + 1) * 200)])
             vc1[i] = np.mean(vm1[(i * 200):((i + 1) * 200)])
-            ar1[i] = np.mean(am1[(i * 200):((i + 1) * 200)])
-            sc1[i] = np.mean(sm1[(i * 200):((i + 1) * 200)])
+
 
         # create chart
         z1 = zc1 / m_v
@@ -149,13 +145,13 @@ def plotResult(file,file2):
         std_error = np.std(z1, ddof=1) / np.sqrt(len(z1))
         print(std_error)
 
-        plt.errorbar(time,z1,yerr=std_error,marker="o",color="blue",markersize=2, label="training singolo")  #auto ferme su auto circolanti in funzione del tempo
-        print("valor medio di total stopped :", zc1.mean())
-        print("massimo di total stopped :" , zc1.max(), "su max veicoli :", m_v.max())
-        plt.xlabel("time-step",size=12)
+        plt.errorbar(time,z1,yerr=std_error,marker="o",color="blue",markersize=2, label="training copiato")  #auto ferme su auto circolanti in funzione del tempo
+        print("valor medio di total stopped :", z1.mean())
+        print("massimo di total stopped :" , z1.max(), "su max veicoli :", m_v.max())
+        plt.xlabel("time-step",size=15)
 
-        plt.title("rete 2x2 reward 'wait' traffico crescente misura total stopped/running veicles ")
-        plt.ylabel("system total stopped/running vehicles",size=12)
+        plt.title("rete 3x3 reward 'queue' traffico crescente misura total stopped/running vehicles ",size = 15)
+        plt.ylabel("system total stopped/running vehicles",size=15)
 
 
 
@@ -169,8 +165,7 @@ def plotResult(file,file2):
             zc2[i]=np.mean(zm2[(i * 200):((i + 1) * 200)])
             uc2[i] = np.mean(um2[(i * 200):((i + 1) * 200)])
             vc2[i] = np.mean(vm2[(i * 200):((i + 1) * 200)])
-            ar2[i] = np.mean(am2[(i * 200):((i + 1) * 200)])
-            sc2[i] = np.mean(sm2[(i * 200):((i + 1) * 200)])
+
 
         z2 = zc2 / m_veh
         std_error = np.std(z2, ddof=1) / np.sqrt(len(z2))
@@ -180,10 +175,16 @@ def plotResult(file,file2):
         #autoMedie = np.concatenate((m_v,m_veh),axis=0)
         print(autoMedie)
         print(m_veh)
-        plt.errorbar(time,z2,yerr=std_error,marker="x",color="orange",markersize=2, label="semaforo standard")
-
-        print("valor medio di total stopped :", zc2.mean())
-        print("massimo di total stopped :", zc2.max(),"su max veicoli : ", m_veh.max())
+        plt.errorbar(time,z2,yerr=std_error,marker="x",color="orange",markersize=2, label="training indipendente")
+        # for x,y in zip (m_v,zc1):
+        #     label = int(x)
+        #     plt.annotate(label,  # this is the text
+        #                  (x, y),  # these are the coordinates to position the label
+        #                  textcoords="offset points",  # how to position the text
+        #                  xytext=(0, 5),  # distance from text to points (x,y)
+        #                  ha='center')  # horizontal alignment can be left, right or center
+        print("valor medio di total stopped :", z2.mean())
+        print("massimo di total stopped t.s :", z2.max(),"su max veicoli : ", m_veh.max())
         tick=np.arange(0,1000,100)
         plt.xticks(time, time)
         plt.legend()
@@ -191,16 +192,16 @@ def plotResult(file,file2):
         plt.show()
 
        #throughtput
-        print("arrivati : " ,sm2)
+
         tput1 = ar1/sc1
         std_error = np.std(tput1, ddof=1) / np.sqrt(len(tput1))
-        plt.errorbar(time, tput1, yerr=std_error, marker="o", color="blue", markersize=5, label="una reward")
+        plt.errorbar(time, tput1, yerr=std_error, marker="o", color="blue", markersize=5, label="reward wait")
         tput2 = ar2/sc2
         std_error = np.std(tput2, ddof=1) / np.sqrt(len(tput2))
         plt.errorbar(time, tput2, yerr=std_error, marker="x", color="orange", markersize=5, label="reward diverse")
         plt.xlabel("time-step", size=12)
-        plt.xticks(time, time)
-        plt.title("rete 4x4  misura troughput")
+        plt.xticks(m_veh, m_veh)
+        plt.title("rete 4x4 reward wait e varie reward misura troughput")
         plt.ylabel("system throughput", size=12)
         plt.legend()
         plt.grid()
@@ -209,7 +210,7 @@ def plotResult(file,file2):
 
         std_error = np.std(um1, ddof=1) / np.sqrt(len(um1))
         # create chart
-        plt.errorbar(time,uc1,yerr=std_error,marker="o",color="blue",markersize=2, label="reward uguali")
+        plt.errorbar(time,uc1,yerr=std_error,marker="o",color="blue",markersize=2, label="training copiato")
         print("valor medio di mean waiting time :" ,uc1.mean())
         # for x,y in zip (m_v,uc1):
         #     label = int(x)
@@ -221,15 +222,15 @@ def plotResult(file,file2):
         print("massimo di mean waiting time :", uc1.max())
         std_error = np.std(um2, ddof=1) / np.sqrt(len(um2))
         # create chart
-        plt.errorbar(time,uc2,yerr=std_error,marker="x",color="orange",markersize=2,label="reward diverse")
+        plt.errorbar(time,uc2,yerr=std_error,marker="x",color="orange",markersize=2,label="training indipendente")
 
         print("valor medio di mean waiting time :" ,uc2.mean())
 
 
         print("massimo di mean waiting time :", uc2.max())
-        plt.xlabel("numero auto medio in circolazione ogni 1000 secondi",size=12)
-        plt.title("rete 2x2 reward 'average-speed' traffico crescente misura mean waiting time ")
-        plt.ylabel("system mean waiting time(seconds)",size=12)
+        plt.xlabel("time-step",size=15)
+        plt.title("rete 3x3 reward 'queue' traffico crescente misura mean waiting time ",size=15)
+        plt.ylabel("system mean waiting time(seconds)",size=15)
         plt.xticks(time,time)
         plt.legend()
 
@@ -245,25 +246,25 @@ def plotResult(file,file2):
 
         std_error = np.std(vm1, ddof=1) / np.sqrt(len(vm1))
         # create chart
-        plt.errorbar(time, vc1, yerr=std_error, marker="o",markersize=2, color="blue", label="training singolo")
+        plt.errorbar(time, vc1, yerr=std_error, marker="o",markersize=5, color="blue", label="training copiato")
 
 
         # for x, y in zip(m_v, vc1):
         #     label = int(x)
-            # plt.annotate(label,  # this is the text
-            #              (x, y),  # these are the coordinates to position the label
-            #              textcoords="offset points",  # how to position the text
-            #              xytext=(0, 5),  # distance from text to points (x,y)
-            #              ha='center')  # horizontal alignment can be left, right or center
+        #     plt.annotate(label,  # this is the text
+        #                  (x, y),  # these are the coordinates to position the label
+        #                  textcoords="offset points",  # how to position the text
+        #                  xytext=(0, 5),  # distance from text to points (x,y)
+        #                  ha='center')  # horizontal alignment can be left, right or center
         std_error = np.std(vm2, ddof=1) / np.sqrt(len(vm2))
-        plt.errorbar(time, vc2, yerr=std_error, marker="x", color="orange", markersize=2,label="semaforo standard")
-        plt.xlabel("time-step ")
-        plt.title("rete 2x2 reward 'wait' traffico crescente misura mean speed")
+        plt.errorbar(time, vc2, yerr=std_error, marker="x", color="orange", markersize=5,label="training indipendente")
+        plt.xlabel("time-step",size=15)
+        plt.title("rete 4x4 reward 'diff-waiting-time' traffico crescente misura mean speed",size=15)
         plt.legend()
-        plt.xticks(time, time)
+        plt.xticks(time,time)
         plt.grid()
-        plt.ylabel("system mean speed(m/s)")
+        plt.ylabel("system mean speed(m/s)",size=15)
         plt.show()
 if __name__ == '__main__':
-        file2 = 'D:/programmi/sumo/esperimenti semafori/Reinforcement-learning-in-traffic-light/outputs/4x4/ql-4x4grid-variReward-10000sec(e auto)'
-        plotResult('D:/programmi/sumo/esperimenti semafori/Reinforcement-learning-in-traffic-light/outputs/4x4/ql-4x4grid-unareward',file2)
+        file2 = 'D:/programmi/sumo/esperimenti semafori/Reinforcement-learning-in-traffic-light/outputs/4x4/result_trainingSingoli_crescente(wait)corretto'
+        plotResult('D:/programmi/sumo/esperimenti semafori/Reinforcement-learning-in-traffic-light/outputs/4x4/result_trainingCopiato_crescente(wait)corretto',file2)
