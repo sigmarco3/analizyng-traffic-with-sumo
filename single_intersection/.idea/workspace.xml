@@ -17,40 +17,7 @@
       <change beforePath="$PROJECT_DIR$/../4x4_grid/util/gen_route.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../4x4_grid/util/xml2csv.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../4x4_grid/util/xsd.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dqn/a3c_4x4grid.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dqn/a3c_4x4grid.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dqn/dqn2x2.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dqn/dqn2x2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dqn/dqn_2way-single-intersection.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dqn/dqn_2way-single-intersection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dqn/sumoRay.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dqn/sumoRay.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nets/2x2grid/2x2training.rou.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../nets/2x2grid/2x2training.rou.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nets/3x3grid/3x3training.rou.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../nets/3x3grid/3x3training.rou.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nets/4x4/4x4training.rou.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../nets/4x4/4x4training.rou.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2x2static.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/a3c_2x2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dqn_2x2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/env.py" beforeDir="false" afterPath="$PROJECT_DIR$/env.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/epsilon_greedy.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plotResult_single.py" beforeDir="false" afterPath="$PROJECT_DIR$/plotResult_single.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plotResult_unFile.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static-2x2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static-intersection.py" beforeDir="false" afterPath="$PROJECT_DIR$/static-intersection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingCopiati/2x2/ql_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingCopiati/2x2/ql_agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/2x2/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/2x2/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/2x2/plotResult_single.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/2x2/plotResult_single.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/2x2/test/environment/env.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/2x2/test/environment/env.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/2x2/test/plotResult_single.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/2x2/test/ql_2x2.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/2x2/test/ql_2x2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/2x2/test/ql_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/2x2/test/ql_agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/2x2/training/env.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/2x2/training/env.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/2x2/training/ql_2x2.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/2x2/training/ql_2x2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/3x3/test/ql_3x3.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/3x3/test/ql_3x3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/3x3/training/ql_3x3.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/3x3/training/ql_3x3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/4x4/test/environment/env.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/4x4/test/environment/env.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/4x4/test/ql_4x4.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/4x4/test/ql_4x4.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/4x4/test/ql_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/4x4/test/ql_agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/4x4/training/env.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/4x4/training/env.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/4x4/training/ql_4x4.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/4x4/training/ql_4x4.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../trainingSingoli/4x4/training/traffic_signal.py" beforeDir="false" afterPath="$PROJECT_DIR$/../trainingSingoli/4x4/training/traffic_signal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../trips.trips.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
